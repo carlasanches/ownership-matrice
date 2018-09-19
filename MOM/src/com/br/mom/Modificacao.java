@@ -29,5 +29,11 @@ public class Modificacao {
 
 	public String getNomeArquivoNovo() {
 		return nomeArquivoNovo;
-	}		
+	}
+
+	@Override
+	public String toString() {
+		return "Modificacao [tipo=" + tipo + ", nomeArquivoAtual=" + nomeArquivoAtual + ", nomeArquivoAntigo="
+				+ nomeArquivoAntigo + ", nomeArquivoNovo=" + nomeArquivoNovo + "]";
+	}	
 }

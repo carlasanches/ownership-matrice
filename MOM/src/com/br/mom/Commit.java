@@ -39,5 +39,14 @@ public class Commit {
 
 	public ArrayList<Modificacao> getModificacoes() {
 		return modificacoes;
+	}
+
+	@Override
+	public String toString() {
+		return "Commit [hash=" + hash + ", autor=" + autor.toString() + ", committer=" + committer.toString() + ", mensagem=" + mensagem
+				+ ", dataAutoria=" + dataAutoria + ", dataCommit=" + dataCommit + ", modificacoes=" + modificacoes.toString()
+				+ "]";
 	}	
+	
+	
 }
