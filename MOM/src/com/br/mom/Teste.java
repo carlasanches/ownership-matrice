@@ -12,7 +12,11 @@ public class Teste {
 		Recursos.getInstance().criarRecursosRepoDriller("");
 		//System.out.println(Limpeza.detectarDesenvolvedores().toString());
 		//System.out.println(Limpeza.detectarArquivos().toString());
-		System.out.println(Metodos.centralidade("junit/swingui/TestRunner.java"));
+		//System.out.println(Metodos.centralidade("junit/swingui/TestRunner.java"));
+		
+		MOM mom = new MOM();
+		mom.principaisModulosCentralidade();
+		
 //		for(Commit c : Recursos.getInstance().getCommits()) {
 //			try {
 //				BufferedWriter escritor = new BufferedWriter(new FileWriter("test.txt",true));			
