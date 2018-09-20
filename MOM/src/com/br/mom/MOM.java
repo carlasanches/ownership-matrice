@@ -46,7 +46,17 @@ public class MOM {
 			
 			centralidadePorModulo.put(modulo, soma);
 		}
-				
+		
+		ArrayList<Integer> centralidadeArray = new ArrayList<>(centralidadePorModulo.values());
+		
+	
+		int k = 10;
+	
+		if(centralidadeArray.size() < 10) {
+			k = centralidadeArray.size();
+		}
+		
+		Estatistica.kMeans(centralidadeArray, k);		
 		return null;
 	}
 	
