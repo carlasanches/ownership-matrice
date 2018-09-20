@@ -24,7 +24,7 @@ public class Desenvolvedor {
 
 	@Override
 	public String toString() {
-		return "Desenvolvedor [nome=" + nome + ", email=" + email + "]";
+		return "Desenvolvedor [nome=" + nome + ", email=" + email + "]" + "\n";
 	}	
 	
 	

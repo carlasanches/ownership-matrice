@@ -10,6 +10,8 @@ public class Teste {
 		// TODO Auto-generated method stub
 		
 		Recursos.getInstance().criarRecursosRepoDriller("");
+		//System.out.println(Limpeza.detectarDesenvolvedores().toString());
+		//System.out.println(Limpeza.detectarArquivos().toString());
 		
 //		for(Commit c : Recursos.getInstance().getCommits()) {
 //			try {

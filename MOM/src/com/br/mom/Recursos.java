@@ -144,7 +144,6 @@ public class Recursos {
 					commit = lerCommit(linha);
 					if(commit != null) {
 						this.commits.add(commit);
-						System.out.println(commit.toString());
 					}	
 						
 				}

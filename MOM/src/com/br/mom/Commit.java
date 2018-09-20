@@ -27,6 +27,14 @@ public class Commit {
 	
 	public int getHash() {
 		return hash;
+	}	
+
+	public Desenvolvedor getAutor() {
+		return autor;
+	}
+
+	public Desenvolvedor getCommitter() {
+		return committer;
 	}
 
 	public Date getDataAutoria() {
