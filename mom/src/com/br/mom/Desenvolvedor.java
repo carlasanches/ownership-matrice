@@ -21,6 +21,16 @@ public class Desenvolvedor {
 	public String getEmail() {
 		return email;
 	}
+	
+	public void calcularPropriedade() {
+		for(String arquivo : Limpeza.detectarArquivos()) {
+			propriedades.put(arquivo, Metodos.doa(this.getNome(), arquivo));			
+		}
+	}	
+
+	public Hashtable<String, Double> getPropriedades() {
+		return propriedades;
+	}
 
 	@Override
 	public String toString() {

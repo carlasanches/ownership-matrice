@@ -35,9 +35,7 @@ public class Estatistica {
 		int parada = 10;
 		
 		while(parada != 0) {
-			
-			//System.out.println(centroids);
-			
+						
 			//calcula a distância dos valores da amostra para os centroids
 			for(Integer valor : amostra) {				
 				

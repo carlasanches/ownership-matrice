@@ -3,6 +3,7 @@ package com.br.mom;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Teste {
 
@@ -15,7 +16,21 @@ public class Teste {
 		//System.out.println(Metodos.centralidade("junit/swingui/TestRunner.java"));
 		
 		MOM mom = new MOM();
-		mom.principaisModulosCentralidade();
+		//mom.principaisModulosCentralidade();
+		mom.print();
+		mom.save();
+		
+		
+//		for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//			d.calcularPropriedade();	
+//			//System.out.println(d.getPropriedades().toString());
+//			ArrayList<Double> valores = new ArrayList<Double>(d.getPropriedades().values());
+//			System.out.println(Normalizacao.normalizar(valores).toString());
+//		}
+		
+		
+		
+		
 		
 //		for(Commit c : Recursos.getInstance().getCommits()) {
 //			try {
