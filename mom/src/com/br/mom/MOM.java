@@ -127,7 +127,7 @@ public class MOM {
 	
 	public void save() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new FileWriter("test2.csv",true));				
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("teste-meu-exemplo.csv",true));				
 			
 			escritor.write(";");
 			
