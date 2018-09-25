@@ -98,10 +98,6 @@ public class Recursos {
 			BufferedReader leitor = new BufferedReader(new FileReader(diretorioArquivo));
 			
 			String texto = leitor.readLine();	
-			
-			if (texto != null) {
-			    texto = texto.substring (0, texto.length() - 1);
-			}
 									
 			while(texto != null){	
 								
@@ -110,12 +106,7 @@ public class Recursos {
 				boolean flag = false;
 								
 				if(linha.length != 12) {
-					texto = leitor.readLine();
-					
-					if (texto != null) {
-					    texto = texto.substring (0, texto.length() - 1);
-					}
-					
+					texto = leitor.readLine();	
 					continue;
 				}
 				
@@ -148,12 +139,7 @@ public class Recursos {
 						
 				}
 							
-				texto = leitor.readLine();	
-				
-				if (texto != null) {
-				    texto = texto.substring (0, texto.length() - 1);
-				}
-				
+				texto = leitor.readLine();					
 			}
 			
 			leitor.close();
