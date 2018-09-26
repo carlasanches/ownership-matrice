@@ -93,7 +93,6 @@ public class Recursos {
 	}
 	
 	public void criarRecursosRepoDriller(String diretorioArquivo) {
-		
 		try {
 			BufferedReader leitor = new BufferedReader(new FileReader(diretorioArquivo));
 			
@@ -106,6 +105,7 @@ public class Recursos {
 				boolean flag = false;
 								
 				if(linha.length != 12) {
+					System.out.println("tamanho != 12");
 					texto = leitor.readLine();	
 					continue;
 				}

@@ -44,22 +44,12 @@ public class Limpeza {
 	public static ArrayList<String> detectarArquivos(){
 		
 		ArrayList<String> arquivos = new ArrayList<String>();
-		boolean flag;
 		
 		for(Commit c: Recursos.getInstance().getCommits()) {
-			
-			flag = false;
-			
 			for(Modificacao m : c.getModificacoes()) {
-				for(int i = 0; i < arquivos.size(); i++) {
-					if(arquivos.get(i).equals(m.getNomeArquivoAtual())) {
-						flag = true;
-						break;
-					}
-				}
 				
-				if(!flag) {
-					arquivos.add(m.getNomeArquivoAtual());					
+				if(!arquivos.contains(m.getNomeArquivoAtual())) {
+					arquivos.add(m.getNomeArquivoAtual());	
 				}
 			}	
 		}
