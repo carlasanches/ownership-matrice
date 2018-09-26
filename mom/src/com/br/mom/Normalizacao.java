@@ -11,12 +11,11 @@ public class Normalizacao {
 		double porcentagem = 0;
 
 		Collections.sort(valores);
-		Collections.reverse(valores);
 		
-		porcentagem = (1 - valores.get(0)) / valores.get(0);
+		porcentagem = (1 - valores.get(valores.size()-1)) / valores.get(valores.size()-1);
 		
 		for(int i = 0; i < valores.size(); i++) {
-			valoresNormalizados.add(valores.get(i) + porcentagem);
+			valoresNormalizados.add(valores.get(i) + (porcentagem * valores.get(i)));
 		}
 		
 		return valoresNormalizados;

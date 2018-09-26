@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Teste {
 
@@ -28,7 +29,61 @@ public class Teste {
 //			System.out.println(s);
 //		}
 		
-
+		//4. Calcula DOA corretamente?		
+		//FA? OK
+		
+//		int cont = 0;
+//		
+//		for(String arquivo : Limpeza.detectarArquivos()) {
+//			for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//				System.out.println((++cont) + "	" + d.getNome() + "	" + Metodos.firstAutorship(d.getNome(), arquivo) + "	" + arquivo);
+//			}
+//		}		
+		
+		//DL? OK
+		
+//		int cont = 0;
+//		
+//		for(String arquivo : Limpeza.detectarArquivos()) {
+//			for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//				System.out.println((++cont) + "	" + d.getNome() + "	" + Metodos.deliveries(d.getNome(), arquivo) + "	" + arquivo);
+//			}
+//		}	
+		
+		//AC? OK
+		
+//		int cont = 0;
+//		
+//		for(String arquivo : Limpeza.detectarArquivos()) {
+//			for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//				System.out.println((++cont) + "	" + d.getNome() + "	" + Metodos.acceptances(d.getNome(), arquivo) + "	" + arquivo);
+//			}
+//		}	
+		
+		//DOA? OK
+		
+//		int cont = 0;
+//		
+//		for(String arquivo : Limpeza.detectarArquivos()) {
+//			for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//				System.out.println((++cont) + "	" + d.getNome() + "	" + Metodos.doa(d.getNome(), arquivo) + "	" + arquivo);
+//			}
+//		}
+		
+		//5. Normaliza DOA corretamente? OK
+		
+//		int cont = 0;
+//		
+//		ArrayList<Double> valores;
+//		
+//		for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//			valores = new ArrayList<>();
+//			for(String arquivo : Limpeza.detectarArquivos()) {				
+//				valores.add(Metodos.doa(d.getNome(), arquivo));				
+//			}			
+//			System.out.println(Normalizacao.normalizar(valores));
+//			System.out.println(valores.toString());
+//		}
 		
 		
 		//System.out.println(Limpeza.detectarDesenvolvedores().toString());
@@ -47,9 +102,6 @@ public class Teste {
 //			ArrayList<Double> valores = new ArrayList<Double>(d.getPropriedades().values());
 //			System.out.println(Normalizacao.normalizar(valores).toString());
 //		}
-		
-		
-		
 		
 		
 //		for(Commit c : Recursos.getInstance().getCommits()) {
