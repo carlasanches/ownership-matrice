@@ -15,7 +15,7 @@ public class MOM {
 	
 	public MOM(){
 		this.modulos = new ArrayList<>();
-		this.desenvolvedores = Limpeza.detectarDesenvolvedores();
+		this.desenvolvedores = Recursos.getInstance().getDesenvolvedores();
 		this.propriedades = new ArrayList<>();
 	}
 	
@@ -24,7 +24,7 @@ public class MOM {
 		Hashtable<String, Integer> centralidadePorArquivo = new Hashtable<String, Integer>();
 		Hashtable<String, Integer> centralidadePorModulo = new Hashtable<String, Integer>();
 		
-		for(String arquivo : Limpeza.detectarArquivos()) {	
+		for(String arquivo : Recursos.getInstance().getArquivos()) {	
 						
 			centralidadePorArquivo.put(arquivo, Metodos.centralidade(arquivo));			
 			
@@ -34,12 +34,12 @@ public class MOM {
 				modulos.add(dir[0]);				
 			}
 		}
-		
+				
 		for(String modulo : this.modulos) {
 			
 			int soma = 0;
 			
-			for(String arquivo : Limpeza.detectarArquivos()) {
+			for(String arquivo : Recursos.getInstance().getArquivos()) {
 				
 				if(arquivo.startsWith(modulo)) {
 					soma = soma + centralidadePorArquivo.get(arquivo);
@@ -50,6 +50,8 @@ public class MOM {
 		}
 		
 		ArrayList<Integer> centralidadeArray = new ArrayList<>(centralidadePorModulo.values());
+		
+		System.out.println(centralidadeArray.toString());
 		
 		ArrayList<ArrayList<Integer>> resultadoKMeans = new ArrayList<>();
 	
@@ -83,9 +85,8 @@ public class MOM {
 			for(Integer valor : maiorCluster) {
 				if(centralidadePorModulo.get(modulos.get(i)) == valor) {
 					
-					for(String arquivo : Limpeza.detectarArquivos()) {
+					for(String arquivo : Recursos.getInstance().getArquivos()) {
 						if(arquivo.startsWith(modulos.get(i))) {
-							System.out.println(arquivo);
 							modulos.remove(i);
 							String[] dir = arquivo.split("/");
 							
@@ -113,7 +114,7 @@ public class MOM {
 			for(Desenvolvedor d : this.desenvolvedores) {
 				d.calcularPropriedade();
 				
-				for(String arquivo : Limpeza.detectarArquivos()) {
+				for(String arquivo : Recursos.getInstance().getArquivos()) {
 					if(arquivo.startsWith(modulo)) {
 						soma = soma + d.getPropriedades().get(arquivo);
 					}

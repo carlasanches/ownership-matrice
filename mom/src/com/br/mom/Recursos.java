@@ -9,10 +9,12 @@ public class Recursos {
 	
 	public static String SEPARADOR = ",";
 	
-	public static Recursos rec = null;
+	public static Recursos rec = null;	
 	
+	private ArrayList<Desenvolvedor> desenvolvedores;
+	private ArrayList<String> arquivos;
 	private ArrayList<Commit> commits;
-	private ArrayList<String> arquivosScanCode;
+	private ArrayList<String> arquivosScanCode;	
 	
 	public static Recursos getInstance() {
 		if(rec == null) {
@@ -23,10 +25,62 @@ public class Recursos {
 	}
 	
 	private Recursos() {
+		desenvolvedores = new ArrayList<>();
+		arquivos = new ArrayList<>();
 		commits = new ArrayList<>();
 		arquivosScanCode = new ArrayList<>();
 	}
 	
+	public ArrayList<Desenvolvedor> getDesenvolvedores() {
+		
+		boolean flag = false;
+		
+		for(Commit c : this.commits) {
+			
+			for(int i = 0; i < desenvolvedores.size(); i++) {
+				if(desenvolvedores.get(i).getNome().equals(c.getAutor().getNome())) {
+					flag = true;
+					break;
+				}
+			}
+			
+			if(!flag) {
+				desenvolvedores.add(c.getAutor());
+			}
+			
+			flag = false;
+			
+			for(int i = 0; i < desenvolvedores.size(); i++) {
+				if(desenvolvedores.get(i).getNome().equals(c.getCommitter().getNome())) {
+					flag = true;
+					break;
+				}
+			}
+			
+			if(!flag) {
+				desenvolvedores.add(c.getCommitter());
+			}
+			
+			flag = false;
+		}
+		
+		return desenvolvedores;
+	}
+
+	public ArrayList<String> getArquivos() {
+				
+		for(Commit c: this.commits) {
+			for(Modificacao m : c.getModificacoes()) {
+				
+				if(!arquivos.contains(m.getNomeArquivoAtual())) {
+					arquivos.add(m.getNomeArquivoAtual());	
+				}
+			}	
+		}
+		
+		return arquivos;
+	}
+
 	public ArrayList<Commit> getCommits(){
 		return this.commits;
 	}

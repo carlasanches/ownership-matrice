@@ -1,5 +1,7 @@
 package com.br.mom;
 
+import java.util.ArrayList;
+
 public class Metodos {
 	
 	public static int firstAutorship(String md, String fp) {
@@ -55,22 +57,12 @@ public class Metodos {
 	}
 	
 	public static int centralidade(String arquivo) {
-		
-		//nessa abordagem é como se um arquivo muito alterado fosse mais importante
-		
+				
 		int numDesenvolvedores = 0;
 		
-		for(Commit c : Recursos.getInstance().getCommits()) {
-			
-			for(Modificacao m : c.getModificacoes()) {
-				if(arquivo.equals(m.getNomeArquivoAtual())) {
-					if(c.getAutor().getNome().equals(c.getCommitter().getNome())) {						
-						numDesenvolvedores++;
-					}
-					else numDesenvolvedores = numDesenvolvedores + 2;
-					
-					break;
-				}
+		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
+			if(d.getPropriedades().get(arquivo) > 0) {
+				numDesenvolvedores++;
 			}
 		}
 		

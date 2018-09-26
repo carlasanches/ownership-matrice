@@ -23,7 +23,7 @@ public class Desenvolvedor {
 	}
 	
 	public void calcularPropriedade() {
-		for(String arquivo : Limpeza.detectarArquivos()) {
+		for(String arquivo : Recursos.getInstance().getArquivos()) {
 			propriedades.put(arquivo, Metodos.doa(this.getNome(), arquivo));			
 		}
 	}	

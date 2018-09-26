@@ -20,13 +20,16 @@ public class Teste {
 //		}
 		
 		//2. Separa desenvolvedores devidamente? OK
-//		for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
 //			System.out.println(d.getNome());
 //		}
 		
 		//3. Separa arquivos devidamente? OK
-//		for(String s : Limpeza.detectarArquivos()) {
-//			System.out.println(s);
+		
+//		int cont = 0;
+//		
+//		for(String s : Recursos.getInstance().getArquivos()) {
+//			System.out.println((++cont) + "	" + s);
 //		}
 		
 		//4. Calcula DOA corretamente?		
@@ -85,6 +88,23 @@ public class Teste {
 //			System.out.println(valores.toString());
 //		}
 		
+		//6. Detecta principais módulos corretamente?		
+		//Centralidade? OK
+		
+		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
+			d.calcularPropriedade();
+		}
+		
+		for(String arquivo : Recursos.getInstance().getArquivos()) {
+			System.out.println(Metodos.centralidade(arquivo) + "	" + arquivo);
+		}
+		
+		//Primeiros módulos? OK
+		
+		//Centralidade por módulo?
+		
+//		MOM mom = new MOM();
+//		mom.principaisModulosCentralidade();
 		
 		//System.out.println(Limpeza.detectarDesenvolvedores().toString());
 		//System.out.println(Limpeza.detectarArquivos().toString());
