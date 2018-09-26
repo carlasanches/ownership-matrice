@@ -91,13 +91,20 @@ public class Teste {
 		//6. Detecta principais módulos corretamente?		
 		//Centralidade? OK
 		
-		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
-			d.calcularPropriedade();
-		}
-		
-		for(String arquivo : Recursos.getInstance().getArquivos()) {
-			System.out.println(Metodos.centralidade(arquivo) + "	" + arquivo);
-		}
+//		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
+//			d.calcularPropriedade();
+//		}
+//		
+//		ArrayList<String> modulos = new ArrayList<>();
+//		
+//		for(String arquivo : Recursos.getInstance().getArquivos()) {
+//			String[] modulo = arquivo.split("/");
+//			modulos.add(modulo[0]);			
+//		}
+//		
+//		for(String modulo : modulos) {
+//			System.out.println();
+//		}
 		
 		//Primeiros módulos? OK
 		

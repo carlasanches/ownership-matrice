@@ -56,14 +56,18 @@ public class Metodos {
 		return 3.293 + 1.098 * firstAutorship(md, fp) + 0.164 * deliveries(md, fp) - 0.321 * Math.log(1 + acceptances(md, fp));
 	}
 	
-	public static int centralidade(String arquivo) {
+	public static int centralidade(String modulo) {
 				
 		int numDesenvolvedores = 0;
 		
 		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
-			if(d.getPropriedades().get(arquivo) > 0) {
-				numDesenvolvedores++;
+			for(String arquivo : Recursos.getInstance().getArquivos()) {
+				
+				if(d.getPropriedades().get(arquivo) > 0 && arquivo.startsWith(modulo)) {
+					numDesenvolvedores++;
+				}
 			}
+			
 		}
 		
 		return numDesenvolvedores;

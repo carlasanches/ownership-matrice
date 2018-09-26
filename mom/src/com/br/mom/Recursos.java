@@ -31,7 +31,9 @@ public class Recursos {
 		arquivosScanCode = new ArrayList<>();
 	}
 	
-	public ArrayList<Desenvolvedor> getDesenvolvedores() {
+	
+	
+	public void setDesenvolvedores() {
 		
 		boolean flag = false;
 		
@@ -63,12 +65,9 @@ public class Recursos {
 			
 			flag = false;
 		}
-		
-		return desenvolvedores;
 	}
 
-	public ArrayList<String> getArquivos() {
-				
+	public void setArquivos() {
 		for(Commit c: this.commits) {
 			for(Modificacao m : c.getModificacoes()) {
 				
@@ -77,7 +76,13 @@ public class Recursos {
 				}
 			}	
 		}
-		
+	}
+
+	public ArrayList<Desenvolvedor> getDesenvolvedores() {		
+		return desenvolvedores;
+	}
+
+	public ArrayList<String> getArquivos() {				
 		return arquivos;
 	}
 
@@ -195,6 +200,9 @@ public class Recursos {
 							
 				texto = leitor.readLine();					
 			}
+			
+			setDesenvolvedores();
+			setArquivos();
 			
 			leitor.close();
 						
