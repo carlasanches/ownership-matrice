@@ -164,7 +164,6 @@ public class Recursos {
 				boolean flag = false;
 								
 				if(linha.length != 12) {
-					System.out.println("tamanho != 12");
 					texto = leitor.readLine();	
 					continue;
 				}

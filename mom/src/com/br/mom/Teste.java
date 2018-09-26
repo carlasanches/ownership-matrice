@@ -47,8 +47,8 @@ public class Teste {
 		
 //		int cont = 0;
 //		
-//		for(String arquivo : Limpeza.detectarArquivos()) {
-//			for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//		for(String arquivo : Recursos.getInstance().getArquivos()) {
+//			for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
 //				System.out.println((++cont) + "	" + d.getNome() + "	" + Metodos.deliveries(d.getNome(), arquivo) + "	" + arquivo);
 //			}
 //		}	
@@ -57,8 +57,8 @@ public class Teste {
 		
 //		int cont = 0;
 //		
-//		for(String arquivo : Limpeza.detectarArquivos()) {
-//			for(Desenvolvedor d : Limpeza.detectarDesenvolvedores()) {
+//		for(String arquivo : Recursos.getInstance().getArquivos()) {
+//			for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
 //				System.out.println((++cont) + "	" + d.getNome() + "	" + Metodos.acceptances(d.getNome(), arquivo) + "	" + arquivo);
 //			}
 //		}	
@@ -91,27 +91,32 @@ public class Teste {
 		//6. Detecta principais módulos corretamente?		
 		//Centralidade? OK
 		
+//		int cont = 0;
+		
 //		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
 //			d.calcularPropriedade();
-//		}
+//		}	
 //		
 //		ArrayList<String> modulos = new ArrayList<>();
 //		
 //		for(String arquivo : Recursos.getInstance().getArquivos()) {
 //			String[] modulo = arquivo.split("/");
-//			modulos.add(modulo[0]);			
+//			
+//			if(!modulos.contains(modulo[0])) {
+//				modulos.add(modulo[0]);	
+//			}
 //		}
 //		
 //		for(String modulo : modulos) {
-//			System.out.println();
+//			System.out.println(Metodos.centralidade(modulo) + "	" + modulo);
 //		}
 		
 		//Primeiros módulos? OK
 		
-		//Centralidade por módulo?
-		
-//		MOM mom = new MOM();
-//		mom.principaisModulosCentralidade();
+		//Cálculo k-means?		
+				
+		MOM mom = new MOM();
+		mom.principaisModulosCentralidade();
 		
 		//System.out.println(Limpeza.detectarDesenvolvedores().toString());
 		//System.out.println(Limpeza.detectarArquivos().toString());

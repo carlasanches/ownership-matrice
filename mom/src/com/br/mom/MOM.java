@@ -21,12 +21,9 @@ public class MOM {
 	
 	public void principaisModulosCentralidade(){
 		
-		Hashtable<String, Integer> centralidadePorArquivo = new Hashtable<String, Integer>();
 		Hashtable<String, Integer> centralidadePorModulo = new Hashtable<String, Integer>();
 		
-		for(String arquivo : Recursos.getInstance().getArquivos()) {	
-						
-			centralidadePorArquivo.put(arquivo, Metodos.centralidade(arquivo));			
+		for(String arquivo : Recursos.getInstance().getArquivos()) {							
 			
 			String[] dir = arquivo.split("/");
 			
@@ -35,23 +32,12 @@ public class MOM {
 			}
 		}
 				
-		for(String modulo : this.modulos) {
+		for(String modulo : this.modulos) {	
 			
-			int soma = 0;
-			
-			for(String arquivo : Recursos.getInstance().getArquivos()) {
-				
-				if(arquivo.startsWith(modulo)) {
-					soma = soma + centralidadePorArquivo.get(arquivo);
-				}
-			}
-			
-			centralidadePorModulo.put(modulo, soma);
+			centralidadePorModulo.put(modulo, Metodos.centralidade(modulo));
 		}
 		
 		ArrayList<Integer> centralidadeArray = new ArrayList<>(centralidadePorModulo.values());
-		
-		System.out.println(centralidadeArray.toString());
 		
 		ArrayList<ArrayList<Integer>> resultadoKMeans = new ArrayList<>();
 	

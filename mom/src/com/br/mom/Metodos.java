@@ -26,7 +26,7 @@ public class Metodos {
 		for(Commit c : Recursos.getInstance().getCommits()) {
 			if(c.getAutor().getNome().equals(md) || c.getCommitter().getNome().equals(md)) {
 				for(Modificacao m : c.getModificacoes()) {
-					if(m.getNomeArquivoAtual().equals(fp)) {
+					if(m.getNomeArquivoAtual().startsWith(fp)) {
 						numDeliveries++;
 					}
 				}
@@ -61,13 +61,9 @@ public class Metodos {
 		int numDesenvolvedores = 0;
 		
 		for(Desenvolvedor d : Recursos.getInstance().getDesenvolvedores()) {
-			for(String arquivo : Recursos.getInstance().getArquivos()) {
-				
-				if(d.getPropriedades().get(arquivo) > 0 && arquivo.startsWith(modulo)) {
-					numDesenvolvedores++;
-				}
+			if(deliveries(d.getNome(), modulo) > 0) {
+				numDesenvolvedores++;
 			}
-			
 		}
 		
 		return numDesenvolvedores;
