@@ -31,6 +31,8 @@ public class MOM {
 				modulos.add(dir[0]);				
 			}
 		}
+		
+		System.out.println(modulos.toString());
 				
 		for(String modulo : this.modulos) {	
 			
@@ -41,15 +43,16 @@ public class MOM {
 		
 		ArrayList<ArrayList<Integer>> resultadoKMeans = new ArrayList<>();
 	
-		for(int k = 0; k <= 3; k++) {
+		for(int k = 0; k <= 5; k++) {
 			if(k < centralidadeArray.size()) {
 				resultadoKMeans = Estatistica.kMeans(centralidadeArray, k);
 			}			
 		}
-		
+						
 		double maiorMedia = 0;
 		ArrayList<Double> medias = new ArrayList<>();
 		
+		//determina a maior média entre os clusters sem desordenar
 		for(ArrayList<Integer> array : resultadoKMeans) {
 			double media = Estatistica.media(array);
 			medias.add(media);
@@ -61,34 +64,49 @@ public class MOM {
 		
 		ArrayList<Integer> maiorCluster = new ArrayList<>();
 		
+		//recupera o cluster com a maior média
 		for(int i = 0; i < medias.size(); i++) {
 			if(maiorMedia == medias.get(i)) {
 				maiorCluster = resultadoKMeans.get(i);
 			}
 		}			
 		
-		for(int i = 0; i < this.modulos.size(); i++) {
-			for(Integer valor : maiorCluster) {
-				if(centralidadePorModulo.get(modulos.get(i)) == valor) {
+		ArrayList<String> modulosCopia = new ArrayList<>();
+		for(String modulo : this.modulos) {
+			modulosCopia.add(modulo);
+		}
+		
+		for(Integer valor : maiorCluster) {
+			for(String modulo : modulosCopia) {
+				int centralidade = centralidadePorModulo.get(modulo);
+				
+				if(valor == centralidade) {
+					modulos.remove(modulo);
 					
 					for(String arquivo : Recursos.getInstance().getArquivos()) {
-						if(arquivo.startsWith(modulos.get(i))) {
-							modulos.remove(i);
+						if(arquivo.startsWith(modulo)) {
 							String[] dir = arquivo.split("/");
 							
 							if(dir.length > 1) {
-								modulos.add(dir[0] + "/" + dir[1]);
+								
+								String novoDir = dir[0] + "/" + dir[1];
+								if(!modulos.contains(novoDir)) {
+									modulos.add(novoDir);
+								}
 							}
-							else modulos.add(dir[0]);							
+							else {
+								if(!modulos.contains(dir[0])) {
+									 modulos.add(dir[0]);
+								}
+							}							
 						}
 					}
 				}
-			}			
-		}
-		
+			}
+		}				
 	}
 	
-	public void print() {
+	public void propriedade() {
 		
 		
 		principaisModulosCentralidade();
@@ -107,14 +125,13 @@ public class MOM {
 				}
 				propriedadeList.add(soma);
 			}
-			System.out.println("modulo " + modulo);
 			this.propriedades.add(propriedadeList);
 		}
 	}
 	
 	public void save() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v1-mom-teste.csv",true));				
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v2-mom.csv",true));				
 			
 			escritor.write(";");
 			

@@ -113,10 +113,17 @@ public class Teste {
 		
 		//Primeiros módulos? OK
 		
-		//Cálculo k-means?		
+		//Cálculo k-means? OK
+		
+		//Seleção do maior cluster? OK
+		
+		//Adiciona novos módulos como principais? OK
+		
+		//Ainda não faz a adição recursivamente
 				
 		MOM mom = new MOM();
 		mom.principaisModulosCentralidade();
+		
 		
 		//System.out.println(Limpeza.detectarDesenvolvedores().toString());
 		//System.out.println(Limpeza.detectarArquivos().toString());

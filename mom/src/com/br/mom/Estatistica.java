@@ -28,7 +28,7 @@ public class Estatistica {
 			clusters.add(cluster);
 			clustersCopia.add(clusterCopia);
 		}
-		
+				
 		Collections.sort(amostra);		
 		int maiorValor = amostra.get(amostra.size()-1);
 		
@@ -43,11 +43,13 @@ public class Estatistica {
 				
 				ArrayList<Double> distanciaPorValor = new ArrayList<>();
 				
+				//adiciona no vetor a distância do valor para cada centroid
 				for(Double centroid : centroids) {
 					double valorDouble = valor;
 					distanciaPorValor.add(distanciaEuclidiana(centroid, valorDouble));
 				}		
 				
+				//determina a menor distância do vetor sem perder a ordenação
 				for(int i = 0; i < distanciaPorValor.size(); i++) {
 					if(distanciaPorValor.get(i) < menorDistancia) {
 						menorDistancia = distanciaPorValor.get(i);
@@ -55,14 +57,12 @@ public class Estatistica {
 				}
 				
 				
-				//atribui valores a cada cluster
+				//atribui valor ao cluster do mesmo índice da menor distância
 				for(int i = 0; i < distanciaPorValor.size(); i++) {
 					if(menorDistancia == distanciaPorValor.get(i)) {
 						clusters.get(i).add(valor);
 					}
 				}
-				
-				
 			}
 			
 			centroids.clear();
@@ -73,7 +73,7 @@ public class Estatistica {
 				centroids.add(media(clusters.get(i)));
 			}
 			
-			
+			//reinicia clusters para nova movimentação
 			clusters = new ArrayList<>();
 			for(int i = 0; i < k; i ++) {
 				ArrayList<Integer> cluster = new ArrayList<>();
