@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 public class MOM {
 	
@@ -19,124 +20,191 @@ public class MOM {
 		this.propriedades = new ArrayList<>();
 	}
 	
-	public void principaisModulosCentralidade(){
-		
-		Hashtable<String, Integer> centralidadePorModulo = new Hashtable<String, Integer>();
-		
-		for(String arquivo : Recursos.getInstance().getArquivos()) {							
-			
+	public void iniciarModulos(ArrayList<String> arquivos) {		
+		for(String arquivo : arquivos) {							
+				
 			String[] dir = arquivo.split("/");
 			
 			if(!this.modulos.contains(dir[0])){				
 				modulos.add(dir[0]);				
 			}
 		}
+	}
 		
-		System.out.println(modulos.toString());
-				
-		for(String modulo : this.modulos) {	
+	public void principaisModulosCentralidade(int mediaEquipe){
+		
+		iniciarModulos(Recursos.getInstance().getArquivos());		
+
+		int maiorMediaInt = 0;
+		int cont = 2;
+		
+		//System.out.println(modulos.toString());
+		
+		do {
 			
-			centralidadePorModulo.put(modulo, Metodos.centralidade(modulo));
-		}
-		
-		ArrayList<Integer> centralidadeArray = new ArrayList<>(centralidadePorModulo.values());
-		
-		ArrayList<ArrayList<Integer>> resultadoKMeans = new ArrayList<>();
-	
-		for(int k = 0; k <= 5; k++) {
-			if(k < centralidadeArray.size()) {
-				resultadoKMeans = Estatistica.kMeans(centralidadeArray, k);
-			}			
-		}
-						
-		double maiorMedia = 0;
-		ArrayList<Double> medias = new ArrayList<>();
-		
-		//determina a maior média entre os clusters sem desordenar
-		for(ArrayList<Integer> array : resultadoKMeans) {
-			double media = Estatistica.media(array);
-			medias.add(media);
+			Hashtable<String, Integer> centralidadePorModulo = new Hashtable<String, Integer>();
 			
-			if(media > maiorMedia) {
-				maiorMedia = Estatistica.media(array);
+			for(String modulo : this.modulos) {				
+				centralidadePorModulo.put(modulo, Metodos.centralidade(modulo));
 			}
-		}
-		
-		ArrayList<Integer> maiorCluster = new ArrayList<>();
-		
-		//recupera o cluster com a maior média
-		for(int i = 0; i < medias.size(); i++) {
-			if(maiorMedia == medias.get(i)) {
-				maiorCluster = resultadoKMeans.get(i);
+			
+			ArrayList<Integer> centralidadeArray = new ArrayList<>(centralidadePorModulo.values());
+			
+//			for(String modulo : this.modulos) {
+//				System.out.println(centralidadePorModulo.get(modulo) + "	" + modulo);
+//			}
+			
+			ArrayList<ArrayList<Integer>> resultadoKMeans = new ArrayList<>();
+			
+			for(int k = 0; k <= 5; k++) {
+				if(k < centralidadeArray.size()) {
+					resultadoKMeans = Estatistica.kMeans(centralidadeArray, k);
+				}			
 			}
-		}			
-		
-		ArrayList<String> modulosCopia = new ArrayList<>();
-		for(String modulo : this.modulos) {
-			modulosCopia.add(modulo);
-		}
-		
-		for(Integer valor : maiorCluster) {
-			for(String modulo : modulosCopia) {
-				int centralidade = centralidadePorModulo.get(modulo);
+			
+			double maiorMedia = 0;
+			ArrayList<Double> medias = new ArrayList<>();
+			
+			//determina a maior média entre os clusters sem desordenar
+			for(ArrayList<Integer> array : resultadoKMeans) {
+				double media = Estatistica.media(array);
+				medias.add(media);
 				
-				if(valor == centralidade) {
-					modulos.remove(modulo);
+				if(media > maiorMedia) {
+					maiorMedia = Estatistica.media(array);
+				}
+			}
+			
+			maiorMediaInt = (int) maiorMedia;
+			
+			ArrayList<Integer> maiorCluster = new ArrayList<>();
+			
+			//recupera o cluster com a maior média
+			for(int i = 0; i < medias.size(); i++) {
+				if(maiorMedia == medias.get(i)) {
+					maiorCluster = resultadoKMeans.get(i);
+				}
+			}		
+			
+			ArrayList<String> modulosCopia = new ArrayList<>();
+			for(String modulo : this.modulos) {
+				modulosCopia.add(modulo);
+			}
+			
+			for(Integer valor : maiorCluster) {
+				for(String modulo : modulosCopia) {
+					int centralidade = centralidadePorModulo.get(modulo);
 					
-					for(String arquivo : Recursos.getInstance().getArquivos()) {
-						if(arquivo.startsWith(modulo)) {
-							String[] dir = arquivo.split("/");
-							
-							if(dir.length > 1) {
-								
-								String novoDir = dir[0] + "/" + dir[1];
-								if(!modulos.contains(novoDir)) {
-									modulos.add(novoDir);
-								}
+					if(valor == centralidade) {
+						modulos.remove(modulo);
+						
+						for(String arquivo : Recursos.getInstance().getArquivos()) {
+							if(arquivo.startsWith(modulo)) {
+								String[] dir = arquivo.split("/");
+						
+								if(cont <= dir.length) {
+									String novoDir = criaModulo(dir, cont);
+									
+									if(!modulos.contains(novoDir)) {
+										modulos.add(novoDir);
+									}
+								}				
 							}
-							else {
-								if(!modulos.contains(dir[0])) {
-									 modulos.add(dir[0]);
-								}
-							}							
 						}
 					}
 				}
-			}
-		}				
+			}				
+			cont++;
+			
+		}while(maiorMediaInt > mediaEquipe);	
+		
+//		for(String modulo : modulos) {
+//			System.out.println(Metodos.centralidade(modulo) + "	" + modulo);
+//		}
 	}
 	
-	public void propriedade() {
+	public String criaModulo(String[] dir, int nivelDir) {
 		
+		String novoDir = "";
 		
-		principaisModulosCentralidade();
+		if(dir.length == 1) return dir[0];
+		if(dir.length > 1) {
+			for(int i = 0; i < nivelDir; i++) {
+				novoDir += dir[i];				
+				if(i < (nivelDir-1)) novoDir += "/";
+			}			
+		}
+		
+		return novoDir;
+	}
+	
+	public void calcularPropriedade() {
+		
+		principaisModulosCentralidade(20);
+		ArrayList<Double> propriedadeList;
+		
+		for(Desenvolvedor d : this.desenvolvedores) {
+			d.calcularPropriedade();
+		}
 		
 		for(String modulo : this.modulos) {
-			ArrayList<Double> propriedadeList = new ArrayList<>();
-			double soma = 0;
-			
-			for(Desenvolvedor d : this.desenvolvedores) {
-				d.calcularPropriedade();
+			propriedadeList = new ArrayList<>();
+			for(Desenvolvedor d : this.desenvolvedores) {				
+				double somaArquivos = 0;
+				double somaPropriedades = 0;
+				double porcentagem = 0;
 				
 				for(String arquivo : Recursos.getInstance().getArquivos()) {
 					if(arquivo.startsWith(modulo)) {
-						soma = soma + d.getPropriedades().get(arquivo);
+						somaArquivos++;
+						
+						if(d.eProprietario(0.50, 3.293, arquivo)) {
+							somaPropriedades++;
+						}
 					}
 				}
-				propriedadeList.add(soma);
+				porcentagem = somaPropriedades/somaArquivos * 100;
+				
+				propriedadeList.add(porcentagem);
+
 			}
 			this.propriedades.add(propriedadeList);
+		}
+		
+		seleciona();
+	}
+	
+	public void seleciona() {
+		
+		int soma;
+		
+		for(int i = 0; i < propriedades.size(); i++) {
+			soma = 0;
+			for(int j = 0; j < propriedades.get(i).size(); j++) {
+				if(propriedades.get(i).get(j) > 0) {
+					soma++;
+				}
+			}
+			if(soma == 0) {
+				propriedades.remove(i);
+				modulos.remove(i);
+			}
 		}
 	}
 	
 	public void save() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v2-mom.csv",true));				
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v3-mockito3.csv",true));				
 			
 			escritor.write(";");
 			
 			for(Desenvolvedor d : this.desenvolvedores) {
 				escritor.write(d.getNome() + ";");
+			}
+			escritor.write(";");
+			
+			for(Desenvolvedor d : this.desenvolvedores) {
+				escritor.write(d.getEmail() + ";");
 			}
 			
 			escritor.write("\n");

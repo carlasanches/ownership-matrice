@@ -1,5 +1,7 @@
 package com.br.mom;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Desenvolvedor {
@@ -23,10 +25,27 @@ public class Desenvolvedor {
 	}
 	
 	public void calcularPropriedade() {
-		for(String arquivo : Recursos.getInstance().getArquivos()) {
+		for(String arquivo : Recursos.getInstance().getArquivos()) {			
 			propriedades.put(arquivo, Metodos.doa(this.getNome(), arquivo));			
 		}
 	}	
+	
+	public boolean eProprietario(double limNormalizado, double limAbsoluto, String arquivo) {
+		
+		ArrayList<Double> valoresProps = new ArrayList<>(this.propriedades.values());
+		ArrayList<Double> doaNormalizados = Normalizacao.normalizar(valoresProps);
+		Hashtable<String, Double> propsNormalizadas = new Hashtable<>();
+		
+		for(int i = 0; i < Recursos.getInstance().getArquivos().size(); i++) {
+			propsNormalizadas.put(Recursos.getInstance().getArquivos().get(i), doaNormalizados.get(i));
+		}
+		
+		if(propsNormalizadas.get(arquivo) > limNormalizado && propriedades.get(arquivo) >= limAbsoluto) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	public Hashtable<String, Double> getPropriedades() {
 		return propriedades;

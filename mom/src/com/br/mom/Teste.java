@@ -120,10 +120,15 @@ public class Teste {
 		//Adiciona novos módulos como principais? OK
 		
 		//Ainda não faz a adição recursivamente
-				
-		MOM mom = new MOM();
-		mom.principaisModulosCentralidade();
 		
+//		MOM mom = new MOM();
+//		mom.principaisModulosCentralidade();
+		
+		//7. Calcula propriedade dos MÓDULOS corretamente?
+				
+		MOM mom = new MOM();		
+		mom.calcularPropriedade();
+		mom.save();
 		
 		//System.out.println(Limpeza.detectarDesenvolvedores().toString());
 		//System.out.println(Limpeza.detectarArquivos().toString());
