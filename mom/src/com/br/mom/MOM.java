@@ -185,7 +185,7 @@ public class MOM {
 					soma++;
 				}
 			}
-			if(soma == 0) {
+			if(soma == 0 || soma < 80) {
 				propriedades.remove(i);
 				modulos.remove(i);
 			}
@@ -194,13 +194,16 @@ public class MOM {
 	
 	public void save() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v3-mockito3.csv",true));				
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v3-mockito-limpeza.csv",true));				
 			
 			escritor.write(";");
 			
 			for(Desenvolvedor d : this.desenvolvedores) {
 				escritor.write(d.getNome() + ";");
 			}
+			
+			escritor.write("\n");
+			
 			escritor.write(";");
 			
 			for(Desenvolvedor d : this.desenvolvedores) {

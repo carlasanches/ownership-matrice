@@ -200,10 +200,12 @@ public class Recursos {
 				texto = leitor.readLine();					
 			}
 			
+			leitor.close();
+			
+			Limpeza.alterarDiretoriosRenomeados();
+			
 			setDesenvolvedores();
 			setArquivos();
-			
-			leitor.close();
 						
 		} catch (IOException e) {
 			e.printStackTrace();

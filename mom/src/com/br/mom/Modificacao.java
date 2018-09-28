@@ -22,6 +22,10 @@ public class Modificacao {
 	public String getNomeArquivoAtual() {
 		return nomeArquivoAtual;
 	}
+	
+	public void setNomeArquivoAtual(String nomeArquivoAtual) {
+		this.nomeArquivoAtual = nomeArquivoAtual;
+	}
 
 	public String getNomeArquivoAntigo() {
 		return nomeArquivoAntigo;
