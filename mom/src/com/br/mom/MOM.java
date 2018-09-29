@@ -20,107 +20,107 @@ public class MOM {
 		this.propriedades = new ArrayList<>();
 	}
 	
-	public void iniciarModulos(ArrayList<String> arquivos) {		
+	public ArrayList<String> iniciarModulos(ArrayList<String> arquivos) {	
+		
+		ArrayList<String> modulosList = new ArrayList<String>();
+		
 		for(String arquivo : arquivos) {							
 				
 			String[] dir = arquivo.split("/");
 			
-			if(!this.modulos.contains(dir[0])){				
-				modulos.add(dir[0]);				
+			if(!modulosList.contains(dir[0])){				
+				modulosList.add(dir[0]);				
 			}
 		}
-	}
 		
+		return modulosList;
+	}
+	
 	public void principaisModulosCentralidade(int mediaEquipe){
 		
-		iniciarModulos(Recursos.getInstance().getArquivos());		
-
-		int maiorMediaInt = 0;
-		int cont = 2;
+		ArrayList<String> modulosList = new ArrayList<String>();
 		
-		//System.out.println(modulos.toString());
+		modulosList = iniciarModulos(Recursos.getInstance().getArquivos());
 		
-		do {
+		Hashtable<String, Integer> centralidadePorModulo = new Hashtable<String, Integer>();
+		
+		for(String modulo : modulosList) {				
+			centralidadePorModulo.put(modulo, Metodos.centralidade(modulo));
+		}
+		
+		ArrayList<Integer> centralidadeArray = new ArrayList<>(centralidadePorModulo.values());
+		
+		ArrayList<ArrayList<Integer>> resultadoKMeans = new ArrayList<>();
+		
+		for(int k = 0; k <= 5; k++) {
+			if(k < centralidadeArray.size()) {
+				resultadoKMeans = Estatistica.kMeans(centralidadeArray, k);
+			}			
+		}
+		
+		double maiorMedia = 0;
+		ArrayList<Integer> maiorCluster = new ArrayList<>();
+		
+		//recupera o cluster com a maior média
+		for(ArrayList<Integer> array : resultadoKMeans) {
+			double media = Estatistica.media(array);
 			
-			Hashtable<String, Integer> centralidadePorModulo = new Hashtable<String, Integer>();
-			
-			for(String modulo : this.modulos) {				
-				centralidadePorModulo.put(modulo, Metodos.centralidade(modulo));
+			if(media > maiorMedia) {
+				maiorMedia = media;
+				maiorCluster = array;
 			}
-			
-			ArrayList<Integer> centralidadeArray = new ArrayList<>(centralidadePorModulo.values());
-			
-//			for(String modulo : this.modulos) {
-//				System.out.println(centralidadePorModulo.get(modulo) + "	" + modulo);
-//			}
-			
-			ArrayList<ArrayList<Integer>> resultadoKMeans = new ArrayList<>();
-			
-			for(int k = 0; k <= 5; k++) {
-				if(k < centralidadeArray.size()) {
-					resultadoKMeans = Estatistica.kMeans(centralidadeArray, k);
-				}			
-			}
-			
-			double maiorMedia = 0;
-			ArrayList<Double> medias = new ArrayList<>();
-			
-			//determina a maior média entre os clusters sem desordenar
-			for(ArrayList<Integer> array : resultadoKMeans) {
-				double media = Estatistica.media(array);
-				medias.add(media);
+		}
 				
-				if(media > maiorMedia) {
-					maiorMedia = Estatistica.media(array);
-				}
-			}
-			
-			maiorMediaInt = (int) maiorMedia;
-			
-			ArrayList<Integer> maiorCluster = new ArrayList<>();
-			
-			//recupera o cluster com a maior média
-			for(int i = 0; i < medias.size(); i++) {
-				if(maiorMedia == medias.get(i)) {
-					maiorCluster = resultadoKMeans.get(i);
-				}
-			}		
-			
-			ArrayList<String> modulosCopia = new ArrayList<>();
-			for(String modulo : this.modulos) {
-				modulosCopia.add(modulo);
-			}
-			
-			for(Integer valor : maiorCluster) {
-				for(String modulo : modulosCopia) {
+		for(Integer valor : maiorCluster) {
+			if(valor >= mediaEquipe) {
+				for(String modulo : modulosList) {
+					
 					int centralidade = centralidadePorModulo.get(modulo);
 					
-					if(valor == centralidade) {
-						modulos.remove(modulo);
+					if(centralidade == valor) {
 						
 						for(String arquivo : Recursos.getInstance().getArquivos()) {
-							if(arquivo.startsWith(modulo)) {
-								String[] dir = arquivo.split("/");
-						
-								if(cont <= dir.length) {
-									String novoDir = criaModulo(dir, cont);
-									
-									if(!modulos.contains(novoDir)) {
-										modulos.add(novoDir);
+							
+							String novoModulo = gerarModulo(modulo, arquivo, mediaEquipe);
+							
+							if(novoModulo != null) {
+								String[] aux = novoModulo.split(",");
+								
+								for(String s : aux) {
+									if(!modulos.contains(s) && s != null) {
+										modulos.add(s);
 									}
-								}				
-							}
-						}
+								}
+							}							
+						}						
 					}
 				}
-			}				
-			cont++;
-			
-		}while(maiorMediaInt > mediaEquipe);	
+			}
+		}		
 		
-//		for(String modulo : modulos) {
-//			System.out.println(Metodos.centralidade(modulo) + "	" + modulo);
-//		}
+		System.out.println(modulos.toString());
+	}
+	
+	public String gerarModulo(String modulo, String arquivo, int mediaEquipe){
+		
+		if(arquivo.startsWith(modulo)) {
+			
+			if(arquivo.equals(modulo)) {
+				return arquivo;
+			}
+			
+			String[] moduloSplit = modulo.split("/");
+			String[] arquivoSplit = arquivo.split("/");
+			
+			String novoModulo = arquivo.substring(0, (modulo.length() + 1) + arquivoSplit[moduloSplit.length].length());
+			int centralidade = Metodos.centralidade(novoModulo);
+			
+			if(centralidade >= mediaEquipe) {		
+				return novoModulo + "," + gerarModulo(novoModulo, arquivo, mediaEquipe);
+			}	
+		}		
+		
+		return null;
 	}
 	
 	public String criaModulo(String[] dir, int nivelDir) {
@@ -140,7 +140,7 @@ public class MOM {
 	
 	public void calcularPropriedade() {
 		
-		principaisModulosCentralidade(20);
+		principaisModulosCentralidade(10);
 		ArrayList<Double> propriedadeList;
 		
 		for(Desenvolvedor d : this.desenvolvedores) {
@@ -158,7 +158,7 @@ public class MOM {
 					if(arquivo.startsWith(modulo)) {
 						somaArquivos++;
 						
-						if(d.eProprietario(0.50, 3.293, arquivo)) {
+						if(d.eProprietario(0.8, 2.0, arquivo)) {
 							somaPropriedades++;
 						}
 					}
@@ -171,7 +171,7 @@ public class MOM {
 			this.propriedades.add(propriedadeList);
 		}
 		
-		seleciona();
+		//seleciona();
 	}
 	
 	public void seleciona() {
@@ -194,7 +194,7 @@ public class MOM {
 	
 	public void save() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v3-mockito-limpeza.csv",true));				
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v4-mockito-10-9.csv",true));				
 			
 			escritor.write(";");
 			
