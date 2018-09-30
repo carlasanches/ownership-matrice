@@ -123,21 +123,6 @@ public class MOM {
 		return null;
 	}
 	
-	public String criaModulo(String[] dir, int nivelDir) {
-		
-		String novoDir = "";
-		
-		if(dir.length == 1) return dir[0];
-		if(dir.length > 1) {
-			for(int i = 0; i < nivelDir; i++) {
-				novoDir += dir[i];				
-				if(i < (nivelDir-1)) novoDir += "/";
-			}			
-		}
-		
-		return novoDir;
-	}
-	
 	public void calcularPropriedade() {
 		
 		principaisModulosCentralidade(10);
@@ -163,8 +148,8 @@ public class MOM {
 			ArrayList<Double> propriedadesNormalizadas = new ArrayList<>();
 			propriedadesNormalizadas = Normalizacao.normalizar(propriedadesArquivoList);
 			propriedadesArquivosNormalizadas.add(propriedadesNormalizadas);
-		}
-		
+		}		
+				
 		for(String modulo : this.modulos) {
 			propriedadeList = new ArrayList<>();
 			for(int i = 0; i < this.desenvolvedores.size(); i++) {				
@@ -177,11 +162,14 @@ public class MOM {
 						somaArquivos++;
 						
 						if(this.desenvolvedores.get(i).eProprietario(0.8, 3.293, 
-									propriedadesArquivosNormalizadas.get(j).get(i), propriedadesArquivos.get(j).get(i))) {
+									propriedadesArquivosNormalizadas.get(j).get(i), propriedadesArquivos.get(j).get(i))) {							
 							somaPropriedades++;
 						}
 					}					
 				}
+				
+				String dev = this.desenvolvedores.get(i).getNome();
+				System.out.println(dev);				
 								
 				porcentagem = somaPropriedades/somaArquivos * 100;
 				
@@ -214,7 +202,7 @@ public class MOM {
 	
 	public void save() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v5-che.csv",true));				
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v5-junit4-teste.csv",true));				
 			
 			escritor.write(";");
 			

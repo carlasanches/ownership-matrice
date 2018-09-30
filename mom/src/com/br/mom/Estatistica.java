@@ -101,5 +101,15 @@ public class Estatistica {
 		
 		return soma/valores.size();
 	}
-
+	
+	public static double mediaD(ArrayList<Double> valores) {
+		
+		double soma = 0;
+		
+		for(Double d : valores) {
+			soma = soma + d;
+		}
+		
+		return soma/valores.size();
+	}
 }
