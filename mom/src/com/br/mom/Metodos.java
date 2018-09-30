@@ -52,8 +52,12 @@ public class Metodos {
 		return numAcceptances;
 	}
 	
-	public static double doa(String md, String fp) {		
-		return 3.293 + 1.098 * firstAutorship(md, fp) + 0.164 * deliveries(md, fp) - 0.321 * Math.log(1 + acceptances(md, fp));
+	public static double doa(String md, String fp) {	
+		int FA = firstAutorship(md, fp);
+		int DL = deliveries(md, fp);
+		int AC = acceptances(md, fp);
+		double doaResult = 3.293 + 1.098 * FA + 0.164 * DL - 0.321 * Math.log(1 + AC);
+		return doaResult;
 	}
 	
 	public static int centralidade(String modulo) {

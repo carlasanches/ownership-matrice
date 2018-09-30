@@ -30,17 +30,11 @@ public class Desenvolvedor {
 		}
 	}	
 	
-	public boolean eProprietario(double limNormalizado, double limAbsoluto, String arquivo) {
+	public boolean eProprietario(double limNormalizado, double limAbsoluto, double valorNormalizado, double valorAbsoluto) {
 		
-		ArrayList<Double> valoresProps = new ArrayList<>(this.propriedades.values());
-		ArrayList<Double> doaNormalizados = Normalizacao.normalizar(valoresProps);
-		Hashtable<String, Double> propsNormalizadas = new Hashtable<>();
+		System.out.println(valorNormalizado + "	" + limNormalizado + "	" + valorAbsoluto + "	" + limAbsoluto);
 		
-		for(int i = 0; i < Recursos.getInstance().getArquivos().size(); i++) {
-			propsNormalizadas.put(Recursos.getInstance().getArquivos().get(i), doaNormalizados.get(i));
-		}
-		
-		if(propsNormalizadas.get(arquivo) > limNormalizado && propriedades.get(arquivo) >= limAbsoluto) {
+		if(valorNormalizado >= limNormalizado && valorAbsoluto >= limAbsoluto) {
 			return true;
 		}
 		

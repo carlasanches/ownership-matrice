@@ -147,22 +147,42 @@ public class MOM {
 			d.calcularPropriedade();
 		}
 		
+		ArrayList<ArrayList<Double>> propriedadesArquivos = new ArrayList<>();
+ 		
+		for(String arquivo : Recursos.getInstance().getArquivos()) {	
+			ArrayList<Double> propriedadesArquivo = new ArrayList<>();
+			for(Desenvolvedor d : this.desenvolvedores) {
+				propriedadesArquivo.add(d.getPropriedades().get(arquivo));
+			}	
+			propriedadesArquivos.add(propriedadesArquivo);
+		}
+		
+		ArrayList<ArrayList<Double>> propriedadesArquivosNormalizadas = new ArrayList<>();
+		
+		for(ArrayList<Double> propriedadesArquivoList : propriedadesArquivos) {
+			ArrayList<Double> propriedadesNormalizadas = new ArrayList<>();
+			propriedadesNormalizadas = Normalizacao.normalizar(propriedadesArquivoList);
+			propriedadesArquivosNormalizadas.add(propriedadesNormalizadas);
+		}
+		
 		for(String modulo : this.modulos) {
 			propriedadeList = new ArrayList<>();
-			for(Desenvolvedor d : this.desenvolvedores) {				
+			for(int i = 0; i < this.desenvolvedores.size(); i++) {				
 				double somaArquivos = 0;
 				double somaPropriedades = 0;
 				double porcentagem = 0;
 				
-				for(String arquivo : Recursos.getInstance().getArquivos()) {
-					if(arquivo.startsWith(modulo)) {
+				for(int j = 0; j < Recursos.getInstance().getArquivos().size(); j ++) {
+					if(Recursos.getInstance().getArquivos().get(j).startsWith(modulo)) {
 						somaArquivos++;
 						
-						if(d.eProprietario(0.8, 2.0, arquivo)) {
+						if(this.desenvolvedores.get(i).eProprietario(0.8, 3.293, 
+									propriedadesArquivosNormalizadas.get(j).get(i), propriedadesArquivos.get(j).get(i))) {
 							somaPropriedades++;
 						}
-					}
+					}					
 				}
+								
 				porcentagem = somaPropriedades/somaArquivos * 100;
 				
 				propriedadeList.add(porcentagem);
@@ -194,7 +214,7 @@ public class MOM {
 	
 	public void save() {
 		try {
-			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v4-mockito-10-9.csv",true));				
+			BufferedWriter escritor = new BufferedWriter(new FileWriter("mom-v5-che.csv",true));				
 			
 			escritor.write(";");
 			

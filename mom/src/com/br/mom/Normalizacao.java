@@ -11,7 +11,7 @@ public class Normalizacao {
 		double porcentagem = 0;
 
 		Collections.sort(valores);
-		
+				
 		porcentagem = (1 - valores.get(valores.size()-1)) / valores.get(valores.size()-1);
 		
 		for(int i = 0; i < valores.size(); i++) {
