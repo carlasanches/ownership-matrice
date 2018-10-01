@@ -31,9 +31,7 @@ public class Desenvolvedor {
 	}	
 	
 	public boolean eProprietario(double limNormalizado, double limAbsoluto, double valorNormalizado, double valorAbsoluto) {
-		
-		System.out.println(valorNormalizado + "	" + limNormalizado + "	" + valorAbsoluto + "	" + limAbsoluto);
-		
+						
 		if(valorNormalizado >= limNormalizado && valorAbsoluto >= limAbsoluto) {
 			return true;
 		}

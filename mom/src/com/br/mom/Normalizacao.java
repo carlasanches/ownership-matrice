@@ -9,10 +9,15 @@ public class Normalizacao {
 		
 		ArrayList<Double> valoresNormalizados = new ArrayList<>();
 		double porcentagem = 0;
+		double maiorValor = 0;
 
-		Collections.sort(valores);
+		for(Double valor : valores) {
+			if(valor > maiorValor) {
+				maiorValor = valor;
+			}
+		}
 				
-		porcentagem = (1 - valores.get(valores.size()-1)) / valores.get(valores.size()-1);
+		porcentagem = (1 - maiorValor) / maiorValor;
 		
 		for(int i = 0; i < valores.size(); i++) {
 			valoresNormalizados.add(valores.get(i) + (porcentagem * valores.get(i)));
