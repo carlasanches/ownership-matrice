@@ -51,6 +51,7 @@ public class MOM {
 		for(String modulo : modulosList) {
 			
 			int centralidade = centralidadePorModulo.get(modulo);
+			System.out.println(centralidade);
 			
 			if(centralidade >= mediaEquipe) {
 				
@@ -139,7 +140,6 @@ public class MOM {
 				double porcentagem = 0;
 				double porcentagemArquivo = 0;
 				
-				int test = 0;
 				
 				for(int j = 0; j < Recursos.getInstance().getArquivos().size(); j ++) {
 					if(Recursos.getInstance().getArquivos().get(j).startsWith(modulo)) {
@@ -174,23 +174,13 @@ public class MOM {
 				
 				if(porcentagemI >= 5) {
 					for(String arquivo : this.desenvolvedores.get(i).getArquivos()) {
-						System.out.println("soma: " + somaArquivos + " qtd: " + this.desenvolvedores.get(i).getArquivos().size());
 						if(arquivo.startsWith(modulo)) {
-							int num = hashProprietarios.get(arquivo).size();
-							//System.out.println(hashProprietarios.get(arquivo).toString());
 							divisao = (1.0/hashProprietarios.get(arquivo).size());
 							
 							for(Desenvolvedor dev : hashProprietarios.get(arquivo)) {
 								int x = this.desenvolvedores.indexOf(dev);
 								
-//								if(x < propriedadeList.size()) {
-//									double contNovo = this.desenvolvedores.get(i).getArquivos().size() - (1 - divisao);
-//									double porcentNova = contNovo * porcentagemArquivo;
-//									propriedadeList.set(x, porcentNova);							
-//								}								
-								
 								this.desenvolvedores.get(x).getTemPropriedade().put(arquivo, divisao);
-								double var = desenvolvedores.get(x).getTemPropriedade().get(arquivo);
 								double aux = 0;
 								
 								if(x < propriedadeList.size()) {
@@ -199,8 +189,7 @@ public class MOM {
 											aux = aux + this.desenvolvedores.get(x).getTemPropriedade().get(arq);
 										}
 									}
-									
-									double t = propriedadeList.get(x);									
+																
 									double porcentNova = aux * porcentagemArquivo;
 									propriedadeList.set(x, porcentNova);	
 								}						
@@ -219,28 +208,7 @@ public class MOM {
 			}
 			this.propriedades.add(propriedadeList);
 		}
-		
-		//System.out.println(hashProprietarios.toString());
-		
-		//seleciona();
-	}
-	
-	public void seleciona() {
-		
-		int soma;
-		
-		for(int i = 0; i < propriedades.size(); i++) {
-			soma = 0;
-			for(int j = 0; j < propriedades.get(i).size(); j++) {
-				if(propriedades.get(i).get(j) > 0) {
-					soma++;
-				}
-			}
-			if(soma == 0 || soma < 80) {
-				propriedades.remove(i);
-				modulos.remove(i);
-			}
-		}
+			
 	}
 	
 	public void save(String nomeArquivo) {
