@@ -67,6 +67,7 @@ public class Metodos {
 		}
 		
 		return numDesenvolvedores;
+		
 	}
 
 }

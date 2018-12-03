@@ -11,12 +11,11 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Recursos.getInstance().criarRecursosRepoDriller("");
+		Recursos.getInstance().criarRecursosRepoDriller("D:/Usuarios/Carlos/OneDrive/UFOP/TCC/Atividades/Resultados - mensal/mockito/set-2016.csv");
 				
 		MOM mom = new MOM();		
 		mom.calcularPropriedade();
-		mom.save("");
+		mom.save("D:/Usuarios/Carlos/OneDrive/UFOP/TCC/Atividades/Resultados - mensal/mockito-matriz/mockito-set-2016-teste13.csv");
 		
 	}
-
 }

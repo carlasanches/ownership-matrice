@@ -9,11 +9,15 @@ public class Desenvolvedor {
 	private String nome;
 	private String email;
 	private Hashtable<String, Double> propriedades;
+	private Hashtable<String, Double> temPropriedade;
+	private ArrayList<String> arquivos;
 
 	public Desenvolvedor(String nome, String email) {
 		this.nome = nome;
 		this.email = email;
 		this.propriedades = new Hashtable<>();
+		this.temPropriedade = new Hashtable<>();
+		this.arquivos = new ArrayList<>();
 	}
 
 	public String getNome() {
@@ -41,6 +45,14 @@ public class Desenvolvedor {
 
 	public Hashtable<String, Double> getPropriedades() {
 		return propriedades;
+	}
+	
+	public Hashtable<String, Double> getTemPropriedade(){
+		return temPropriedade;
+	}
+	
+	public ArrayList<String> getArquivos(){
+		return arquivos;
 	}
 
 	@Override
