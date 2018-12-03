@@ -130,7 +130,6 @@ public class MOM {
 		Hashtable<String, ArrayList<Desenvolvedor>> hashProprietarios = new Hashtable<>();
 				
 		for(String modulo : this.modulos) {
-			System.out.println(modulo);
 			
 			propriedadeList = new ArrayList<>();
 			for(int i = 0; i < this.desenvolvedores.size(); i++) {				
@@ -174,7 +173,8 @@ public class MOM {
 				
 				if(porcentagemI >= 5) {
 					for(String arquivo : this.desenvolvedores.get(i).getArquivos()) {
-						if(arquivo.startsWith(modulo)) {
+						if(arquivo.startsWith(modulo) && hashProprietarios.get(arquivo) != null) {	
+							
 							divisao = (1.0/hashProprietarios.get(arquivo).size());
 							
 							for(Desenvolvedor dev : hashProprietarios.get(arquivo)) {
@@ -186,6 +186,8 @@ public class MOM {
 								if(x < propriedadeList.size()) {
 									for(String arq : this.desenvolvedores.get(x).getArquivos()) {
 										if(arq.startsWith(modulo)) {
+											
+											if(this.desenvolvedores.get(x).getTemPropriedade().get(arq) != null)
 											aux = aux + this.desenvolvedores.get(x).getTemPropriedade().get(arq);
 										}
 									}
